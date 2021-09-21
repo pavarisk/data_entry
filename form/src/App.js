@@ -1,11 +1,19 @@
 import React, {useState} from 'react'
+import request from 'superagent'
 import './App.css';
 
 function App() {
+  const baseUrl = 'http://localhost:8080/api/v1'
   const [entry, setEntry] = useState({
     name: '',
     value: 0
   })
+
+  function newEntry (data) {
+    return request.post(`${baseUrl}/data`)
+      .send({data})
+      .then( res => res.body)
+  }
 
   function handleChange (e) {
     console.log(e.target.name, e.target.value)
@@ -19,7 +27,13 @@ function App() {
 
   function handleClick (e) {
     e.preventDefault()
-    return console.log(entry)
+    newEntry(entry)
+      .then(res => console.log(res))
+      .catch(e => console.log(e.message))
+    return setEntry({
+      name: '',
+      value: 0
+    })
   }
   return (
     <div className="App min-vh-100">
