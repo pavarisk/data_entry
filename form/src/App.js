@@ -8,21 +8,11 @@ function App () {
     value: 0
   }
   const baseUrl = 'http://localhost:8080/api/v1'
-  // const [name, setName] = useState(null)
-  // const [value, setValue] = useState(null)
 
   const [entry, setEntry] = useState(initialState)
 
   const [message, setMessage] = useState('')
   const [error, setError] = useState(null)
-
-  // function resetField(input) {
-  //   const newInput = {...input}
-  //   for (var i = 0; i < newInput.length; i++) {
-  //     newInput[i].value = ''
-  //   }
-  //   return newInput
-  // }
 
   function newEntry (data) {
     return request.post(`${baseUrl}/data`)
@@ -31,14 +21,6 @@ function App () {
         return res.body
       })
   }
-
-  // function handleName(e) {
-  //   return setName(e.target.value)
-  // }
-
-  // function handleValue(e) {
-  //   return setValue(e.target.value)
-  // }
 
   function handleChange (e) {
     const { name, value } = e.target
@@ -68,6 +50,7 @@ function App () {
       const name = document.getElementById('name').value = ''
       const value = document.getElementById('value').value = ''
       const clear = name && value
+
       return clear
     } else return setError('Please enter a name and any value between 0 and 99')
   }
