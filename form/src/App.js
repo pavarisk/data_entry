@@ -41,15 +41,17 @@ function App () {
         .catch(e => {
           setError(e.message)
         })
+
+      const name = document.getElementById('name').value = ''
+      const value = document.getElementById('value').value = ''
+      const clear = name && value
+
       if (error === null) {
         setMessage('The form has been submitted')
         setTimeout(() => {
           setMessage('')
         }, 5000)
       }
-      const name = document.getElementById('name').value = ''
-      const value = document.getElementById('value').value = ''
-      const clear = name && value
 
       return clear
     } else return setError('Please enter a name and any value between 0 and 99')
