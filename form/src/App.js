@@ -1,85 +1,94 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import request from 'superagent'
-import './App.css';
+import './App.css'
 
-function App() {
+function App () {
+  const initialState = {
+    name: '',
+    value: 0
+  }
   const baseUrl = 'http://localhost:8080/api/v1'
-  const [name, setName] = useState(null)
-  const [value, setValue] = useState(null)
+  // const [name, setName] = useState(null)
+  // const [value, setValue] = useState(null)
 
-  const input = document.querySelectorAll('input')
-
-  // const [entry, setEntry] = useState({
-  //   name: '',
-  //   value: 0
-  // })
+  const [entry, setEntry] = useState(initialState)
 
   const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
+  const [error, setError] = useState(null)
 
-  function resetField(input) {
-    for (var i = 0; i < input.length; i++) {
-      input[i].value = ''
-    }
-    return
-  }
-
+  // function resetField(input) {
+  //   const newInput = {...input}
+  //   for (var i = 0; i < newInput.length; i++) {
+  //     newInput[i].value = ''
+  //   }
+  //   return newInput
+  // }
 
   function newEntry (data) {
     return request.post(`${baseUrl}/data`)
-      .send({data})
-      .then( res => res.body)
+      .send({ data })
+      .then(res => {
+        return res.body
+      })
   }
 
-  function handleName(e) {
-    return setName(e.target.value)
-  }
-
-  function handleValue(e) {
-    return setValue(e.target.value)
-  }
-  // function handleChange (e) {
-  //   const value = e.target.value
-  //   const name = e.target.name
-  //   setEntry({
-  //     ...entry,
-  //     [name]: value
-  //   })
+  // function handleName(e) {
+  //   return setName(e.target.value)
   // }
 
+  // function handleValue(e) {
+  //   return setValue(e.target.value)
+  // }
 
-
-  function handleClick (name, value, input, e) {
-    e.preventDefault()
-    setError('')
-    const entry = {name, value}
-    return newEntry(entry)
-      .then(res => {
-        if (res.status === 200) {
-          setMessage('The form has been submitted')
-          setTimeout(()=> {
-            setMessage('')
-          }, 3000)
-          return resetField()
-        }
-      })
-      .catch(e => {
-        setError(e.message)
-      })
+  function handleChange (e) {
+    const { name, value } = e.target
+    setEntry({
+      ...entry,
+      [name]: value
+    })
   }
+
+  function handleClick (e) {
+    e.preventDefault()
+    setError(null)
+    if (entry !== initialState) {
+      newEntry(entry)
+        .then(res => {
+          return res
+        })
+        .catch(e => {
+          setError(e.message)
+        })
+      if (error === null) {
+        setMessage('The form has been submitted')
+        setTimeout(() => {
+          setMessage('')
+        }, 5000)
+      }
+      const name = document.getElementById('name').value = ''
+      const value = document.getElementById('value').value = ''
+      const clear = name && value
+      return clear
+    } else return setError('Please enter a name and any value between 0 and 99')
+  }
+
   return (
-    <div className="App min-vh-100">
-      {error && <h3 style={{color: 'red'}}>{error}</h3>}
+    <div className="App min-vh-100d-flex flex-column justify-contents-start p-4 bg-dark text-white">
+      {error && <>
+        <h3 style={{ color: 'red' }}>Error:</h3><br/>
+        <p>{error}</p>
+      </>
+      }
       <form className='d-flex flex-column justify-contents-start p-4 bg-dark text-white'>
         <label className='pb-2' htmlFor='name'>Name</label>
-        <input className='pb-2' type='text' name='name' id='name' placeholder='Enter a name of less than 8 characters' onChange={e => handleName(e)} />
+        <input className='pb-2' type='text' name='name' id='name' placeholder='Enter a name of less than 8 characters' onChange={handleChange} />
         <label className='pb-2' htmlFor='value'>Value</label>
-        <input className='pb-2' type='number' name='value' id='value' placeholder='Enter value between 0 and 99' onChange={e => handleValue(e)} />
-        <button className='mt-3' onClick={e => handleClick(name, value, input, e)} >Submit</button>
+        <input className='pb-2' type='number' name='value' id='value' placeholder='Enter value between 0 and 99' onChange={handleChange} />
+        <button className='mt-3' onClick={e => handleClick(e)} >Submit</button>
       </form>
-      {message && <h3>{message}</h3>}
+      {message && <h3>Message:{message}</h3>}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
