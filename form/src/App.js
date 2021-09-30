@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import request from 'superagent'
 import './App.css'
 const apiKey = process.env.REACT_APP_API_KEY
 
@@ -15,41 +14,12 @@ function App () {
     isCool: false
 
   }
-  // const baseUrl = 'http://localhost:8080/api/v1'
-  // const airtableAPI = `https://api.airtable.com/v0/appGoOyAJaaiLpXRD/Test1/?api_key=${apiKey}`
   // const airtableEndPoint = 'https://api.airtable.com/v0/appGoOyAJaaiLpXRD/Test1/'
-  // console.log(apiKey)
 
   const [entry, setEntry] = useState(initialState)
 
   const [message, setMessage] = useState('')
   const [error, setError] = useState(null)
-
-  // function newEntry (data) {
-  //   return request.post(`${airtableAPI}`)
-  //     .set({
-  //       'Content-type': 'application/json',
-  //       accept: 'application/json',
-  //       referrer: 'http://airtable.com'
-  //     })
-  //     .send({ data })
-  //     .then(res => {
-  //       return res.body
-  //     })
-  // }
-
-  // function newEntry (data) {
-  //   return fetch(airtableEndPoint,
-  //     {
-  //       method: 'POST',
-  //       headers: {
-  //         Authorization: `Bearer ${apiKey}`,
-  //         'Content-type': 'application/json',
-  //         accept: 'application/json'
-  //       },
-  //       body: data
-  //     })
-  // }
 
   function handleChange (e) {
     const { name, value } = e.target
@@ -66,6 +36,18 @@ function App () {
     }
   }
 
+  function setTrue (e) {
+    e.preventDefault()
+    entry.isCool = true
+    return entry
+  }
+
+  function setFalse (e) {
+    e.preventDefault()
+    entry.isCool = false
+    return entry
+  }
+
   function handleClick (e) {
     e.preventDefault()
     setError(null)
@@ -74,25 +56,19 @@ function App () {
     const food = document.getElementById('food').value = ''
     const transport = document.getElementById('transport').value = ''
     const number = document.getElementById('number').value = ''
-    const cool = document.getElementById('cool').value = ''
-    const clear = () => (name && food && transport && number && cool)
+    // const cool = document.getElementById('cool').value = ''
+    const clear = () => (name && food && transport && number)
 
-    // const date = Date.now()
-    // const dateObj = new Date(date).toLocaleString()
+    const date = Date.now()
+    const dateObj = new Date(date)
 
     const newRecord = {
-      fields: { ...entry }
+      fields: { ...entry, Modified: dateObj }
     }
+
     console.log(JSON.stringify(newRecord))
 
     if (entry !== initialState) {
-      // newEntry(record)
-      //   .then(res => {
-      //     return res
-      //   })
-      //   .catch(e => {
-      //     setError(e.message)
-      //   })
       base('Test1').create([newRecord], function (err, records) {
         if (err) {
           setError(err.message)
@@ -130,8 +106,10 @@ function App () {
         <input className='pb-2' type='text' name='Mode of transport' id='transport' placeholder='How do you get around?' onChange={handleChange} />
         <label className='pb-2' htmlFor='number'>Favourite Number</label>
         <input className='pb-2' type='number' name='Favourite number' id='number' placeholder='Enter your favourite number' onChange={handleChange} />
-        <label className='pb-2' htmlFor='cool'>Is cool?</label>
-        <input className='pb-2' type='checkbox' name='isCool' id='cool' placeholder='Enter your favourite number' onChange={handleChange} />
+        <div>
+          <label className='p-2' htmlFor='cool'>Is cool?</label>
+          <button onClick={setTrue}>True</button><button onClick={setFalse}>False</button>
+        </div>
         <button className='mt-3' onClick={e => handleClick(e)} >Submit</button>
       </form>
       {message && <h3>Message:{message}</h3>}
