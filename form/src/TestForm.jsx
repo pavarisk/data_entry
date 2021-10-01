@@ -24,8 +24,9 @@ function TestForm (props) {
       const editObj = props.location.param
       await setEntry(editObj)
       return console.log('entry', entry, 'editObj', editObj, 'edit', edit)
-    } else {
+    } else if (props.location.params === undefined) {
       setEdit(false)
+      setEntry(initialState)
     }
   }, [])
 

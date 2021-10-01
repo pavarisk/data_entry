@@ -34,7 +34,7 @@ function DataTable (props) {
     await base('Test1').find(id, function (err, record) {
       if (err) { console.error(err); return }
       props.history.push({ pathname: '/form', param: record.fields })
-      console.log('Retrieved', record.fields)
+      // console.log('Retrieved', record.fields)
     })
   }
 
