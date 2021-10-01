@@ -90,7 +90,7 @@ function TestForm () {
   }
 
   return (
-    <div className="App min-vh-100d-flex flex-column justify-contents-start p-4 bg-dark text-white">
+    <div className="App min-vh-100 d-flex flex-column justify-contents-start p-4 col-11 bg-dark text-white">
       {error && <>
         <h3 style={{ color: 'red' }}>Error:</h3><br/>
         <p>{error}</p>
