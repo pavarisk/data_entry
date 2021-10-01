@@ -9,8 +9,8 @@ function App () {
   return (
     <div className='d-flex justify-content-center'>
       <Route path='/' component={Sidebar}/>
+      <Route path='/table' component={DataTable}/>
       <Route exact path='/form' component={TestForm}/>
-      <Route exact path='/table' component={DataTable}/>
     </div>
   )
 }
