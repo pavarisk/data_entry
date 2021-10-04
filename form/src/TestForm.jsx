@@ -6,11 +6,10 @@ const Airtable = require('airtable')
 const base = new Airtable({ apiKey: apiKey }).base('appGoOyAJaaiLpXRD')
 
 const initialState = {
-  Name: '',
-  'Favourite food': '',
-  'Mode of transport': '',
-  'Favourite number': 0,
-  isCool: false
+  Demands: '',
+  Themes: '',
+  Notes: '',
+  Status: ''
 }
 
 function TestForm (props) {
@@ -48,28 +47,16 @@ function TestForm (props) {
     }
   }
 
-  function setTrue (e) {
-    e.preventDefault()
-    entry.isCool = true
-    return entry
-  }
-
-  function setFalse (e) {
-    e.preventDefault()
-    entry.isCool = false
-    return entry
-  }
-
   function handleClick (e) {
     e.preventDefault()
     setError(null)
 
-    const name = document.getElementById('name').value = ''
-    const food = document.getElementById('food').value = ''
-    const transport = document.getElementById('transport').value = ''
-    const number = document.getElementById('number').value = ''
+    const Demands = document.getElementById('Demands').value = ''
+    const Themes = document.getElementById('Themes').value = ''
+    const Notes = document.getElementById('Notes').value = ''
+    const Status = document.getElementById('Status').value = ''
     // const cool = document.getElementById('cool').value = ''
-    const clear = () => (name && food && transport && number)
+    const clear = () => (Demands && Themes && Notes && Status)
 
     const date = Date.now()
     const dateObj = new Date(date)
@@ -102,8 +89,6 @@ function TestForm (props) {
     } else return setError('Please enter something in the fields')
   }
 
-  console.log(entry)
-
   return (
     <div className="App min-vh-100 d-flex flex-column justify-contents-start p-4 col-11 bg-dark text-white">
       {props.user && <h3>Welcome {props.user.name}</h3>}
@@ -113,18 +98,22 @@ function TestForm (props) {
       </>
       }
       <form className='d-flex flex-column justify-contents-start p-4 bg-dark text-white'>
-        <label className='pb-2' htmlFor='name'>Name</label>
-        <input className='pb-2' type='text' name='Name' id='name' placeholder='Enter a name' value={entry.Name} onChange={handleChange} />
-        <label className='pb-2' htmlFor='food'>Favourite Kai</label>
-        <input className='pb-2' type='text' name='Favourite food' id='food' placeholder='Enter your favourite food' value={entry['Favourite food']} onChange={handleChange} />
-        <label className='pb-2' htmlFor='transport'>Mode of Transport</label>
-        <input className='pb-2' type='text' name='Mode of transport' id='transport' placeholder='How do you get around?' value={entry['Mode of transport']} onChange={handleChange} />
-        <label className='pb-2' htmlFor='number'>Favourite Number</label>
-        <input className='pb-2' type='number' name='Favourite number' id='number' placeholder='Enter your favourite number' value={entry['Favourite number']} onChange={handleChange} />
-        <div>
-          <label className='p-2' htmlFor='cool'>Is cool?</label>
-          <button onClick={setTrue}>True</button><button onClick={setFalse}>False</button>
-        </div>
+        <label className='pb-2' htmlFor='Demands'>Demands</label>
+        <input className='pb-2' type='text' name='Demands' id='Demands' placeholder='Enter a Demands' value={entry.Demands} onChange={handleChange} />
+        <label className='pb-2' htmlFor='Themes'>Themest</label>
+        <select className='pb-2' name='Themes' id='Themes' placeholder='Themes' value={entry.Themes} onChange={handleChange} >
+          <option value="Health">Health</option>
+          <option value="Housing">Housing</option>
+          <option value="Education">Education</option>
+        </select>
+        <label className='pb-2' htmlFor='Notes'>Notes</label>
+        <input className='pb-2' type='Notes' name='Notes' id='Notes' placeholder='Notes' value={entry.Notes} onChange={handleChange} />
+        <label className='pb-2' htmlFor='Status'>Status</label>
+        <select className='pb-2' name='Status' id='Status' placeholder='Status' value={entry.Status} onChange={handleChange} >
+          <option value="Initial Demands">Initial Demands</option>
+          <option value="On Going">On Going</option>
+          <option value="Completed">Completed</option>
+        </select>
         {edit ? <button className='mt-3'>Update</button> : <button className='mt-3' onClick={e => handleClick(e)} >Submit</button>}
       </form>
       {message && <h3>Message:{message}</h3>}

@@ -12,7 +12,7 @@ function DataTable (props) {
       // Selecting the first 3 records in Grid view:
       maxRecords: 100,
       view: 'Grid view',
-      sort: [{ field: 'Name', direction: 'asc' }]
+      sort: [{ field: 'Themes', direction: 'asc' }]
     }).eachPage(function page (records, fetchNextPage) {
       // This function (`page`) will get called for each page of records.
       setData(records)
@@ -44,22 +44,22 @@ function DataTable (props) {
         <thead>
           <tr>
             <th scope='col'>#</th>
-            <th scope='col'>Name</th>
-            <th scope='col'>Favourtie Food</th>
-            <th scope='col'>Mode of Transport</th>
-            <th scope='col'>Favourite Number</th>
-            <th scope='col'>isCool</th>
+            <th scope='col'>Demands</th>
+            <th scope='col'>Themes</th>
+            <th scope='col'>Notes</th>
+            <th scope='col'>Status</th>
+            <th scope='col'>Modified</th>
           </tr>
         </thead>
         <tbody>
           {data.map((record, i) => (
             <tr key={record.id} onClick={e => handleEdit(record.id, e)}>
               <th scope='row'>{i + 1}</th>
-              <td>{record.fields.Name}</td>
-              <td>{record.fields['Favourite food']}</td>
-              <td>{record.fields['Mode of transport']}</td>
-              <td>{record.fields['Favourite number']}</td>
-              <td>{record.fields.isCool}</td>
+              <td>{record.fields.Demands}</td>
+              <td>{record.fields.Themes}</td>
+              <td>{record.fields.Notes}</td>
+              <td>{record.fields.Status}</td>
+              <td>{record.fields.Modified}</td>
             </tr>
           ))}
         </tbody>
