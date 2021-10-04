@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { setUser as setUSER } from './actions/user'
+import { setUSER } from './actions/user'
 
 const users = [
   {
@@ -40,6 +40,7 @@ function Landing (props) {
         console.log('Submitted', user)
         dispatch(setUSER(user))
         clearFields()
+        props.history.push('/form')
       } else {
         clearFields()
         alert('PIN Does not match the Name')
@@ -69,7 +70,6 @@ function Landing (props) {
 }
 
 function mapStateToProps (state) {
-  console.log(state)
   return {
     user: state.user
   }

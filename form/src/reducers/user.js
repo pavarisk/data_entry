@@ -5,8 +5,7 @@ const initialState = {}
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER:
-      console.log(action.user)
-      return state
+      return action.user
     default:
       return state
   }

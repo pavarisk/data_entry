@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 const apiKey = process.env.REACT_APP_API_KEY
 
 const Airtable = require('airtable')
@@ -105,6 +106,7 @@ function TestForm (props) {
 
   return (
     <div className="App min-vh-100 d-flex flex-column justify-contents-start p-4 col-11 bg-dark text-white">
+      {props.user && <h3>Welcome {props.user.name}</h3>}
       {error && <>
         <h3 style={{ color: 'red' }}>Error:</h3><br/>
         <p>{error}</p>
@@ -130,4 +132,10 @@ function TestForm (props) {
   )
 }
 
-export default TestForm
+function mapStateToProps (state) {
+  return {
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps)(TestForm)
