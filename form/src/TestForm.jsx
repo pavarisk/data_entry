@@ -19,7 +19,7 @@ function TestForm (props) {
   const [error, setError] = useState(null)
 
   useEffect(async () => {
-    if (props.location.params !== null) {
+    if (props.location.params !== undefined) {
       setEdit(true)
       const editObj = props.location.param
       await setEntry(editObj)
