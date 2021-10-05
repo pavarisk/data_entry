@@ -9,7 +9,9 @@ const initialState = {
   Demands: '',
   Themes: '',
   Notes: '',
-  Status: ''
+  Status: '',
+  Start: null,
+  End: null
 }
 
 function TestForm (props) {
@@ -34,17 +36,10 @@ function TestForm (props) {
 
   function handleChange (e) {
     const { name, value } = e.target
-    if (name === 'Favourite number') {
-      setEntry(prevState => ({
-        ...prevState,
-        [name]: Number(value)
-      }))
-    } else {
-      setEntry(prevState => ({
-        ...prevState,
-        [name]: value
-      }))
-    }
+    setEntry(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
   }
 
   function handleClick (e) {
@@ -52,17 +47,13 @@ function TestForm (props) {
     setError(null)
 
     const Demands = document.getElementById('Demands').value = ''
-    const Themes = document.getElementById('Themes').value = ''
     const Notes = document.getElementById('Notes').value = ''
-    const Status = document.getElementById('Status').value = ''
-    // const cool = document.getElementById('cool').value = ''
-    const clear = () => (Demands && Themes && Notes && Status)
-
-    const date = Date.now()
-    const dateObj = new Date(date)
+    const Start = document.getElementById('Start').value = ''
+    const End = document.getElementById('End').value = ''
+    const clear = () => (Demands && Notes && Start && End)
 
     const newRecord = {
-      fields: { ...entry, Modified: dateObj }
+      fields: { ...entry }
     }
 
     console.log(JSON.stringify(newRecord))
@@ -100,8 +91,8 @@ function TestForm (props) {
       <form className='d-flex flex-column justify-contents-start p-4 bg-dark text-white'>
         <label className='pb-2' htmlFor='Demands'>Demands</label>
         <input className='pb-2' type='text' name='Demands' id='Demands' placeholder='Enter a Demands' value={entry.Demands} onChange={handleChange} />
-        <label className='pb-2' htmlFor='Themes'>Themest</label>
-        <select className='pb-2' name='Themes' id='Themes' placeholder='Themes' value={entry.Themes} onChange={handleChange} >
+        <label className='pb-2' htmlFor='Themes'>Themes</label>
+        <select className='pb-2' name='Themes' id='Themes' placeholder='Themes' onChange={handleChange} >
           <option value="Health">Health</option>
           <option value="Housing">Housing</option>
           <option value="Education">Education</option>
@@ -109,11 +100,15 @@ function TestForm (props) {
         <label className='pb-2' htmlFor='Notes'>Notes</label>
         <input className='pb-2' type='Notes' name='Notes' id='Notes' placeholder='Notes' value={entry.Notes} onChange={handleChange} />
         <label className='pb-2' htmlFor='Status'>Status</label>
-        <select className='pb-2' name='Status' id='Status' placeholder='Status' value={entry.Status} onChange={handleChange} >
+        <select className='pb-2' name='Status' id='Status' placeholder='Status' onChange={handleChange} >
           <option value="Initial Demands">Initial Demands</option>
           <option value="On Going">On Going</option>
           <option value="Completed">Completed</option>
         </select>
+        <label className='pb-2' htmlFor="Start">Start Date</label>
+        <input className='pb-2' type="date" name='Start' id='Start' onChange={handleChange} />
+        <label className='pb-2' htmlFor="End">End Date</label>
+        <input className='pb-2' type="date" name='End' id='End' onChange={handleChange} />
         {edit ? <button className='mt-3'>Update</button> : <button className='mt-3' onClick={e => handleClick(e)} >Submit</button>}
       </form>
       {message && <h3>Message:{message}</h3>}

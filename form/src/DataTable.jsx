@@ -48,7 +48,8 @@ function DataTable (props) {
             <th scope='col'>Themes</th>
             <th scope='col'>Notes</th>
             <th scope='col'>Status</th>
-            <th scope='col'>Modified</th>
+            <th scope='col'>Start</th>
+            <th scope='col'>End</th>
           </tr>
         </thead>
         <tbody>
@@ -59,7 +60,8 @@ function DataTable (props) {
               <td>{record.fields.Themes}</td>
               <td>{record.fields.Notes}</td>
               <td>{record.fields.Status}</td>
-              <td>{record.fields.Modified}</td>
+              <td>{record.fields.Start}</td>
+              <td>{record.fields.End}</td>
             </tr>
           ))}
         </tbody>
