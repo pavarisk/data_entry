@@ -12,7 +12,7 @@ function DataTable (props) {
       // Selecting the first 3 records in Grid view:
       maxRecords: 100,
       view: 'Grid view',
-      sort: [{ field: 'Themes', direction: 'asc' }]
+      sort: [{ field: 'Status', direction: 'asc' }]
     }).eachPage(function page (records, fetchNextPage) {
       // This function (`page`) will get called for each page of records.
       setData(records)
